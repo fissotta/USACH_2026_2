@@ -1,0 +1,289 @@
+{
+ "iteraciones": 1000000,
+ "estudiantes": {
+  "CA": {
+   "sal": "AOieLfMHS6aExN/Ip4KvHw==",
+   "iv": "VPEpLLCd54Vjg+er",
+   "datos": "WYnutowSSLfF2e32qkvHq0ob/kMHqQeUTf2kTmDfGuNPSXaelQC0M1ika945ZRb7qeRAbeL34j1Ub25S00GcVv6+kCqZWsA8SKbWrauqtPk7PQ0Ztkb6dDpTVgaq/Uw2wsqbnrde7pdN"
+  },
+  "RB": {
+   "sal": "RWHXDKpZDeV7LGfoh8tP0w==",
+   "iv": "DnpOjsKaBjT3X0sL",
+   "datos": "E9AGySHfhQ2zDbw3YWoXFerJ1/vSOdYtTY++18hbQQl3mknTH6X0NgkAn8LxkW5z2IUZEMcZJswBF0BFZfZq3YiS5yWWAHS/Q3H8ic+LhJUIch2ZnEqUs2+KB45SLTNMg2GACj4SvJ59"
+  },
+  "AC": {
+   "sal": "L80JiXefr/qfaQmp9s0d7A==",
+   "iv": "jMq2xCAfUkKynMzn",
+   "datos": "ztN4QD4MYK0rWYQX323zJZgzNO29SFs7iD71RM+nZfqAbG//Q9jjFRZuKX4InQrdCVkGGHQJluyHrQcyJFXC1I2kLdHqsgr1OaV8XTaV/mg+B8OU5q/HSUUjS+CDnFv7LZ/8IQJMeR9R"
+  },
+  "RC": {
+   "sal": "tttyYLnx4+dQMQZx8Blgng==",
+   "iv": "ApHy97JklKk+ofTi",
+   "datos": "V71nPiQJdQUetCWaQsVbMBrWIFYbmv6fPHVUDYAXm4HVlzvE2dVII1VPpO0jdLYhytops59Xvzx66PgLefzVxSBZH3u0/lT5tbJjOo63hPXefgLauiYYoIxRvHskyojCmYCqoqeYQQod"
+  },
+  "ME": {
+   "sal": "1+GzYBLE+yiYj2Imv7fFTg==",
+   "iv": "dF80M0wi8JFkFwsM",
+   "datos": "W3AfV3Kn7StlI8+Ub2jfTatNB+2XfHu87/wvwTlX/UI1M4Y0mQ2JOODmWs6ogmj23eXiXhOT14jAaV/qnOZqS1SpUAXvQRc/a3Wj2pB+/nnWGR54nbjGd8wACZPaPj9CcDE2PvQsUk8V"
+  },
+  "FJ": {
+   "sal": "eerH7X/MZejUmPPcYyyNkA==",
+   "iv": "aS4R8i3oK9WC5bIS",
+   "datos": "fFzMfSSeTCxn3Sz+Rb0QWLnLEbiyFsRFXP7Bm+PJu6Mbw4doDhS+Ol744Z/kCwBJhpxcrExsOULjH22owTGpgbZG18n6nc4lSPQ0sgCRz4f+5Kp8Vg97JQif44+qvyoZjnSeTLi5+dP4"
+  },
+  "FM": {
+   "sal": "dVOM/keZECAz+jIHoyFfgw==",
+   "iv": "ixGwsUPuwYCWIpk6",
+   "datos": "h0prl3BIFLmi9ELBcC2NQVRh3FjmH4mXJDmldurR8Xdd5MUMTHt3s5da2mJOyLi5shMAWXqqROcONy6DJYCxR7RnKXtQdo84WXfLMXd3B73AjYz0HwVkfL3E+WMLWxFT0YmJHl2Rl7a/"
+  },
+  "BP": {
+   "sal": "6xJ+YFTGz5/sDFfDOJWJDQ==",
+   "iv": "DKfKlzu4VSfh59DN",
+   "datos": "kk4EzPV6yGMscQd2gXFaxGd1Rz5OcCm25eq5mEIGdkc8AANaLmbClRiOUWQWXPNeBHOGJk5eU4vpKzT+l4+FazSXqSwOIDLjRtaDSuZ20WAcdmkVlvWgSggBF826tvdDhYkW90OaD0ee"
+  },
+  "JR": {
+   "sal": "P5pJ6V/WACOSuuQedfRQhg==",
+   "iv": "3GSxDTOPHkWRgCVI",
+   "datos": "hh6bAJP5Ije/vJCMUkkhY5Q2BMeQR8VlDMbSTTQEeH5ZDF4fsTSYMFXrjheUx7BC6W7O0Bh8QT3vTY3cIWEtjLRBHajFjplswbmcLAoNp/Evsr1J83sLRJbytzy8DcAQ+yEmaNh+7B8X"
+  },
+  "LA": {
+   "sal": "HHdqn60zoBBBWrTFjfqBgg==",
+   "iv": "9VxBOMkKeHO+1z25",
+   "datos": "q9FjUppkiwdI8XRgI6cuAlXPFLwP1bfWnFG5u4vRLI1uPp/f2cpE2rerATzJVwwb4OFci25IoDB9yIop1bek3z+56MsrkCupPIiE94VsmwYGKWoDc8tbt/u/dH44xOTh5ELQc6MmmKb2"
+  },
+  "GV": {
+   "sal": "04xCiGa2SvJghv0cqwIPDQ==",
+   "iv": "okqSOkm0rweoRkIJ",
+   "datos": "mEzWuseoClhGxocGr/OkmK1IwVnLwH9+uuWF4wUTea1we0hjf5PedNev8C1ZC3CKHsHgMboRQ1aGPebwyKMLhOQjowU4nhVgnXx+GdhVYq29j0Dl3zLQt0+UZ2Izomg6U1XhxlFJujU8"
+  },
+  "MF": {
+   "sal": "1BFOusephLALu7AHlsoIIw==",
+   "iv": "hXjqPvCARZzBa5CR",
+   "datos": "XO1pux/JdQdx4WaQADedHFKvY+YV+FRsXDiGkejeClYmZNw1j/lBxsr69gXyy+8jnuirbW5cuyVM43xvk2kzaaRVjiSiux8vgpOenxbd5Yi6BSB1bNjWL+ED0I++OJIHGjv4tS1paN92"
+  },
+  "AI": {
+   "sal": "5H1MnnTuzOBMCac5yRevqw==",
+   "iv": "xShVhOGqf/AfyiH/",
+   "datos": "tHo1Fv7kMipSxkoR7hL7En/UggBJU7ncbF4u8/TMABnYOl1e0TYrk6TuDE4qgwXcrdIdjt2hXaNUuh0WQ82DrIbq8m1JTRzOu4+O3CQbzFdnh2EmFHZGCkyqOczN0T8KJfujFTurmBfCimti/1QNHPwVTp6COOW+ju7Y6Muo8+w1Fyze+Ly4wQLWgb8gmQl4lpzeIeqdXFs3kGqbzFWsmXHG0BKKSoalV0GUwd+1KnGxFfJUg+U9a9Ib53MrBN1S7DSQEVlj2b0gbaGUMl+Yd9jw6A=="
+  },
+  "AL": {
+   "sal": "xrWPTfYQVNGuIIDdyaaQYg==",
+   "iv": "QqeuoeTq/W365iFp",
+   "datos": "J4hq6jBjRc+K2EiD6RtNqqB9VVGqPv4v5yM0qPkY3392ZdaZIWOhioQaejlQQSgLc1vvp4aABhhIq5X4ugWNEXroZQKSnx7K9xLRbErfJwlhLUhd3ZEwcdiG3tJXAfQOEq0NsQbIMsTWoyfImuPxX+EoZRFKyhW8zrkgtQEPU/X7rfhsh1TB1owAiCjVQojy82/7iMJchyMOtQXclS20zVHc/WP4wRzLnRDsBPU9N6uE2FRgfLt9jsy9+Et15O8DnBGUK9GCyQ6SC3+Vjs3g3PQ7DT2us2Q="
+  },
+  "NC": {
+   "sal": "9gtVC7zXIEwdHpGf5WP8cQ==",
+   "iv": "vtOqUUaYkXpB9HMi",
+   "datos": "dbbWUV9Ya1mZRO0Ha2wQWJdl9+v3C+HcWaAAM3vidAiUhlGm6B888dk4EGcxMpMjtEGbGuAcDMy/ipebusomXJ7UxGM1THtmHSIG39K37qI9JeVWZAPrP4cNsoCDe9ZNAmLHKGXEv8v/3kDOduqPX3gR6GKyfR29BNuLfiGCtjuEro4YAVR+"
+  },
+  "VN": {
+   "sal": "D/HKNLpePY7Y0IAMpiF61A==",
+   "iv": "E/KLABN1CRYN5bRd",
+   "datos": "4yHxGD03wzjmBDSf+hDk7ceWhXEB8IM+of9Z13JWI2RMysDqjXZmhnS7jsshYCTzlmIJgQV05kpmLR5Of3zikV8BIebBHP4WA9GVM8/pOfvDIaG9vKaZUpvUc+CgwWbnai8y8ON/S6IcyDddjFnuaDa9Uz6ujk/CagCHE0lNSzfu+vM7VMTP"
+  },
+  "AG": {
+   "sal": "cN4pr0nKqVA5yHg/FmBIsA==",
+   "iv": "NQ/kap4myid7/MP4",
+   "datos": "Nu+veIS/mtUUoK0lwlDH54ZJOPMLonBqQPHVMnDl2HQXDETrnMl9uPb4MeBaarixBPEPB57YL7pDhjMhJmYEcvFchsmw5kMCEuF0nQVw4IWiLoZUakxmGJcNm4Ia9uF1JAh7MtccwZhLPrzrRPZgYGRiibQYmR3NGPt5FfvGuZBt4sYx8qFjIri7HlDj/szACHClUab8Wnf13lM8UsON/KCyMeptOB20FSmlGsv/pH3cgElWiJZJ67q1yjXWMhix+DrdwFwpoHIr59OPrAmfYa4Tvl8+"
+  },
+  "TH": {
+   "sal": "TqjDxQlCIv2HMSdyeiuC6w==",
+   "iv": "R66QMF/XaibiVx3w",
+   "datos": "9kn62IeSOeOhVsV8UpwK+q8IVUiMDMQ5nzS9tiW6f5IahHj8EwX4F970n34ToV5DyVP3Tk/+utzwJLQw5CCYqYsN9BoTvp6LZRK0blf1MDvUVPLN+lL/tg8D56almHO/0hB3D0KHFynOW3BBsGSUzmCAGfEJrrbwwT7Sp/V1AdO/2YmtEvTFIoAdS0rgBv8T+Vy6vmsgKPubavJYi7Ad+qA39wvZVzfVjfRImw6vEHSPMOzeccdD31m12tmnF46K8djIfjQSCvhuPIYvRgomcGJ2dwyY"
+  }
+ },
+ "notas": {
+  "encabezado": [
+   "Ramo",
+   "Estudiante",
+   "Diagnóstico"
+  ],
+  "filas": [
+   [
+    "Bionformática",
+    "CA"
+   ],
+   [
+    "Bionformática",
+    "RB"
+   ],
+   [
+    "Bionformática",
+    "AC"
+   ],
+   [
+    "Bionformática",
+    "RC"
+   ],
+   [
+    "Bionformática",
+    "ME"
+   ],
+   [
+    "Bionformática",
+    "FJ"
+   ],
+   [
+    "Bionformática",
+    "FM"
+   ],
+   [
+    "Bionformática",
+    "BP"
+   ],
+   [
+    "Bionformática",
+    "JR"
+   ],
+   [
+    "Bionformática",
+    "LA"
+   ],
+   [
+    "Bionformática",
+    "GV"
+   ],
+   [
+    "Bionformática",
+    "MF"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AI"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AL"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "NC"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "VN"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AG"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "TH"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AG"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AI"
+   ],
+   [
+    "Bionformática Aplicada",
+    "TH"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AL"
+   ]
+  ]
+ },
+ "asistencia": {
+  "encabezado": [
+   "Ramo",
+   "Estudiante",
+   "29-09-2026"
+  ],
+  "filas": [
+   [
+    "Bionformática",
+    "CA"
+   ],
+   [
+    "Bionformática",
+    "RB"
+   ],
+   [
+    "Bionformática",
+    "AC"
+   ],
+   [
+    "Bionformática",
+    "RC"
+   ],
+   [
+    "Bionformática",
+    "ME"
+   ],
+   [
+    "Bionformática",
+    "FJ"
+   ],
+   [
+    "Bionformática",
+    "FM"
+   ],
+   [
+    "Bionformática",
+    "BP"
+   ],
+   [
+    "Bionformática",
+    "JR"
+   ],
+   [
+    "Bionformática",
+    "LA"
+   ],
+   [
+    "Bionformática",
+    "GV"
+   ],
+   [
+    "Bionformática",
+    "MF"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AI"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AL"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "NC"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "VN"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "AG"
+   ],
+   [
+    "Tecnología en Bionformática",
+    "TH"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AG"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AI"
+   ],
+   [
+    "Bionformática Aplicada",
+    "TH"
+   ],
+   [
+    "Bionformática Aplicada",
+    "AL"
+   ]
+  ]
+ }
+}

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notas y Asistencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --turquesa: #3F9087;
+    --turquesa-oscuro: #2F6E67;
+    --turquesa-claro: #EAF4F2;
+    --gris: #3C3C3B;       /* texto del logo USACH */
+    --gris-claro: #ECECEE; /* skyline de la plantilla */
+    --blanco: #FFFFFF;
+    --rojo: #C0392B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    color: var(--gris);
+    background: var(--blanco) url("assets/fondo.jpg") left top / 100% 100% no-repeat fixed;
+    min-height: 100vh;
+  }
+  .logo {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+    height: 56px;
+    max-width: calc(100% - 48px);
+    object-fit: contain;
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 150px 24px 140px;
+  }
+  h1 {
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin: 0 0 6px;
+    color: var(--turquesa);
+  }
+  .ayuda { margin: 0 0 28px; font-size: .95rem; }
+  .ayuda button {
+    font: inherit; color: var(--turquesa); background: none; border: 0;
+    padding: 0; margin-left: 6px; cursor: pointer; text-decoration: underline;
+  }
+  section { margin-bottom: 40px; }
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 4px solid var(--turquesa);
+  }
+  .tabla-wrap {
+    overflow-x: auto;
+    background: var(--blanco);
+    border: 1px solid var(--gris-claro);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { padding: 8px 14px; text-align: left; white-space: nowrap; }
+  th { background: var(--turquesa); color: var(--blanco); font-weight: 500; }
+  tbody tr:nth-child(even) { background: var(--turquesa-claro); }
+  td.num { text-align: center; font-variant-numeric: tabular-nums; }
+  td.bajo { font-weight: 700; color: var(--rojo); }
+
+  /* Celdas ocultas: el contenido es de relleno, los datos reales no están en la página */
+  .oculto {
+    filter: blur(4px);
+    opacity: .85;
+    user-select: none;
+  }
+  tr.abierto { background: #D5EBE8 !important; box-shadow: inset 4px 0 0 var(--turquesa); }
+
+  .id {
+    font: inherit; font-weight: 700; letter-spacing: .04em;
+    color: var(--turquesa-oscuro); background: var(--blanco);
+    border: 1.5px solid var(--turquesa); border-radius: 999px;
+    padding: 2px 12px; cursor: pointer;
+  }
+  .id:hover, .id:focus-visible { background: var(--turquesa); color: var(--blanco); outline: none; }
+  tr.abierto .id { background: var(--turquesa); color: var(--blanco); }
+
+  .estado { font-size: .9rem; color: #777; padding: 0 14px; }
+
+  /* Ventana para pedir la clave */
+  dialog {
+    border: 0; border-radius: 10px; padding: 0; width: min(360px, calc(100% - 32px));
+    box-shadow: 0 12px 40px rgba(0,0,0,.25); color: var(--gris);
+  }
+  dialog::backdrop { background: rgba(40, 60, 58, .45); backdrop-filter: blur(2px); }
+  dialog header { background: var(--turquesa); color: var(--blanco); padding: 14px 20px; font-weight: 500; }
+  dialog form { padding: 18px 20px 20px; }
+  dialog label { display: block; font-size: .9rem; margin-bottom: 8px; }
+  dialog input {
+    width: 100%; font: inherit; font-size: 1.05rem; letter-spacing: .06em;
+    padding: 9px 12px; border: 1.5px solid #C9D6D4; border-radius: 6px;
+  }
+  dialog input:focus { outline: none; border-color: var(--turquesa); }
+  .error { color: var(--rojo); font-size: .85rem; min-height: 1.2em; margin: 8px 0 0; }
+  .botones { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+  .botones button {
+    font: inherit; border-radius: 6px; padding: 8px 16px; cursor: pointer;
+    border: 1.5px solid var(--turquesa);
+  }
+  .btn-sec { background: var(--blanco); color: var(--turquesa-oscuro); }
+  .btn-pri { background: var(--turquesa); color: var(--blanco); }
+  .btn-pri:disabled { opacity: .6; cursor: wait; }
+
+  @media (max-width: 640px) {
+    .logo { top: 16px; left: 16px; height: 34px; }
+    main { padding: 90px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+  <img class="logo" src="assets/logo.png" alt="Ingeniería Civil Biomédica USACH">
+  <main>
+    <h1>Notas y Asistencia</h1>
+    <p class="ayuda" id="ayuda"></p>
+    <section>
+      <h2>Notas</h2>
+      <div class="tabla-wrap" id="notas"><p class="estado">Cargando…</p></div>
+    </section>
+    <section>
+      <h2>Asistencia</h2>
+      <div class="tabla-wrap" id="asistencia"><p class="estado">Cargando…</p></div>
+    </section>
+  </main>
+
+  <dialog id="dialogo">
+    <header id="dialogo-titulo">Estudiante</header>
+    <form id="form">
+      <label for="clave">RUT sin puntos ni dígito verificador</label>
+      <input id="clave" inputmode="numeric" autocomplete="off" placeholder="12345678">
+      <p class="error" id="error"></p>
+      <div class="botones">
+        <button type="button" class="btn-sec" id="cancelar">Cancelar</button>
+        <button type="submit" class="btn-pri" id="ver">Ver</button>
+      </div>
+    </form>
+  </dialog>
+
+<script>
+  // datos.json se genera desde DB.xlsx y RUTS/ con generar_datos.py.
+  // Solo ramo e iniciales son públicos; cada estudiante tiene sus filas cifradas con su RUT.
+  const celda = v => typeof v === "number" ? v.toFixed(1) : String(v ?? "");
+  const relleno = { notas: "5.0", asistencia: "x" };
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const AYUDA = "Pincha tu identificador (tus iniciales) e ingresa tu RUT para ver tus resultados.";
+  const ayuda = document.getElementById("ayuda");
+  ayuda.textContent = AYUDA;
+  let datos;
+
+  function dibujar(tipo) {
+    const { encabezado, filas } = datos[tipo];
+    const table = document.createElement("table");
+    const thead = table.createTHead().insertRow();
+    encabezado.forEach(h => { const th = document.createElement("th"); th.textContent = celda(h); thead.appendChild(th); });
+    const tbody = table.createTBody();
+    filas.forEach(([ramo, id]) => {
+      const tr = tbody.insertRow();
+      tr.dataset.id = id;
+      tr.insertCell().textContent = ramo;
+      const btn = document.createElement("button");
+      btn.className = "id";
+      btn.textContent = id;
+      btn.title = "Ver resultados de " + id;
+      btn.onclick = () => abrir(id);
+      const tdId = tr.insertCell();
+      tdId.className = "num";
+      tdId.appendChild(btn);
+      for (let i = 2; i < encabezado.length; i++) {
+        const td = tr.insertCell();
+        td.className = "num oculto";
+        td.textContent = relleno[tipo];
+      }
+    });
+    document.getElementById(tipo).replaceChildren(table);
+  }
+
+  async function descifrar(id, rut) {
+    const e = datos.estudiantes[id];
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(rut), "PBKDF2", false, ["deriveKey"]);
+    const clave = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", hash: "SHA-256", salt: b64(e.sal), iterations: datos.iteraciones },
+      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const texto = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(e.iv) }, clave, b64(e.datos));
+    return JSON.parse(new TextDecoder().decode(texto));
+  }
+
+  function mostrar(id, privado) {
+    ocultar();
+    for (const tipo of ["notas", "asistencia"]) {
+      const filas = document.querySelectorAll(`#${tipo} tbody tr[data-id="${id}"]`);
+      filas.forEach((tr, n) => {
+        tr.classList.add("abierto");
+        const real = privado[tipo][n] || [];
+        [...tr.cells].slice(2).forEach((td, j) => {
+          const v = real[j + 2];
+          td.textContent = celda(v);
+          td.classList.remove("oculto");
+          if (tipo === "notas" && typeof v === "number" && v < 4) td.classList.add("bajo");
+        });
+      });
+    }
+    ayuda.textContent = `Mostrando los resultados de ${id}.`;
+    const b = document.createElement("button");
+    b.textContent = "Ocultar";
+    b.onclick = ocultar;
+    ayuda.appendChild(b);
+    document.querySelector(`#notas tr[data-id="${id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function ocultar() {
+    document.querySelectorAll("tr.abierto").forEach(tr => {
+      tr.classList.remove("abierto");
+      const tipo = tr.closest(".tabla-wrap").id;
+      [...tr.cells].slice(2).forEach(td => { td.textContent = relleno[tipo]; td.className = "num oculto"; });
+    });
+    ayuda.textContent = AYUDA;
+  }
+
+  // Ventana de clave
+  const dialogo = document.getElementById("dialogo");
+  const input = document.getElementById("clave");
+  const error = document.getElementById("error");
+  const ver = document.getElementById("ver");
+  let pedido = null;
+
+  function abrir(id) {
+    pedido = id;
+    document.getElementById("dialogo-titulo").textContent = "Estudiante " + id;
+    input.value = "";
+    error.textContent = "";
+    dialogo.showModal();
+    input.focus();
+  }
+  document.getElementById("cancelar").onclick = () => dialogo.close();
+  document.getElementById("form").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const rut = input.value.replace(/\D/g, "");
+    if (!rut) { error.textContent = "Ingresa tu RUT."; return; }
+    ver.disabled = true; ver.textContent = "Verificando…"; error.textContent = "";
+    try {
+      const privado = await descifrar(pedido, rut);
+      dialogo.close();
+      mostrar(pedido, privado);
+    } catch {
+      error.textContent = "La clave no es correcta.";
+      input.select();
+    } finally {
+      ver.disabled = false; ver.textContent = "Ver";
+    }
+  });
+
+  fetch("datos.json", { cache: "no-store" })
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { datos = d; dibujar("notas"); dibujar("asistencia"); })
+    .catch(e => {
+      document.querySelectorAll(".estado").forEach(p => p.textContent = "No se pudieron cargar los datos (" + e.message + ")");
+    });
+</script>
+</body>
+</html>
