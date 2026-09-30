@@ -153,7 +153,7 @@
   const celda = v => typeof v === "number" ? v.toFixed(1) : String(v ?? "");
   const relleno = { notas: "5.0", asistencia: "x" };
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const AYUDA = "Pincha tu identificador (tus iniciales) e ingresa tu RUT para ver tus resultados.";
+  const AYUDA = "Pincha tu identificador (tus iniciales) e ingresa tu RUT sin puntos ni dígito verificador para ver tus resultados.";
   const ayuda = document.getElementById("ayuda");
   ayuda.textContent = AYUDA;
   let datos;
