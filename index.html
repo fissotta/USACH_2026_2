@@ -182,10 +182,11 @@
   </dialog>
 
 <script>
-  // datos.json se genera desde DB.xlsx y RUTS/ con generar_datos.py.
+  // datos.json se genera desde asistencia_NOTAS.xlsx y RUTS/ con generar_datos.py.
   // Solo ramo e iniciales son públicos; cada estudiante tiene sus filas cifradas con su RUT.
-  const celda = v => typeof v === "number" ? v.toFixed(1) : String(v ?? "");
+  const celda = (v, col) => typeof v === "number" && col !== "Grupo" ? v.toFixed(1) : String(v ?? "");
   const relleno = { notas: "5.0", asistencia: "x" };
+  const rellenoCol = (tipo, i) => datos[tipo].encabezado[i] === "Grupo" ? "0" : relleno[tipo];
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   const AYUDA = "Pincha tu identificador (tus iniciales) e ingresa tu RUT sin puntos ni dígito verificador para ver tus resultados.";
   const ayuda = document.getElementById("ayuda");
@@ -213,7 +214,7 @@
       for (let i = 2; i < encabezado.length; i++) {
         const td = tr.insertCell();
         td.className = "num oculto";
-        td.textContent = relleno[tipo];
+        td.textContent = rellenoCol(tipo, i);
       }
     });
     document.getElementById(tipo).replaceChildren(table);
@@ -237,10 +238,10 @@
         tr.classList.add("abierto");
         const real = privado[tipo][n] || [];
         [...tr.cells].slice(2).forEach((td, j) => {
-          const v = real[j + 2];
-          td.textContent = celda(v);
+          const v = real[j + 2], col = datos[tipo].encabezado[j + 2];
+          td.textContent = celda(v, col);
           td.classList.remove("oculto");
-          if (tipo === "notas" && typeof v === "number" && v < 4) td.classList.add("bajo");
+          if (tipo === "notas" && col !== "Grupo" && typeof v === "number" && v < 4) td.classList.add("bajo");
         });
       });
     }
@@ -256,7 +257,7 @@
     document.querySelectorAll("tr.abierto").forEach(tr => {
       tr.classList.remove("abierto");
       const tipo = tr.closest(".tabla-wrap").id;
-      [...tr.cells].slice(2).forEach(td => { td.textContent = relleno[tipo]; td.className = "num oculto"; });
+      [...tr.cells].slice(2).forEach((td, j) => { td.textContent = rellenoCol(tipo, j + 2); td.className = "num oculto"; });
     });
     ayuda.textContent = AYUDA;
   }

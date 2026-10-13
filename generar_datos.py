@@ -1,4 +1,4 @@
-"""Lee DB.xlsx y las nóminas de RUTS/ y genera datos.json para publicar.
+"""Lee asistencia_NOTAS.xlsx y las nóminas de RUTS/ y genera datos.json para publicar.
 
 La parte pública solo trae el ramo y las iniciales del estudiante. Las notas y la
 asistencia de cada estudiante van cifradas (AES-GCM) con una clave derivada de su
@@ -62,6 +62,9 @@ def leer_hoja(ws):
     filas = [r for r in ws.iter_rows(values_only=True) if any(c is not None for c in r)]
     inicio = min(next(i for i, c in enumerate(r) if c is not None) for r in filas)
     filas = [[valor(c) for c in r[inicio:]] for r in filas]
+    # La columna "#" (numeración de la planilla) no se publica
+    cols = [i for i, h in enumerate(filas[0]) if h != "#"]
+    filas = [[f[i] for i in cols] for f in filas]
     return filas[0], filas[1:]
 
 
@@ -77,7 +80,7 @@ def cifrar(datos, rut):
 
 
 ruts = leer_ruts()
-wb = openpyxl.load_workbook("DB.xlsx", data_only=True)
+wb = openpyxl.load_workbook("asistencia_NOTAS.xlsx", data_only=True)
 hojas = {"notas": leer_hoja(wb["Notas"]), "asistencia": leer_hoja(wb["Asistencia"])}
 ids = asignar_ids({f[enc.index("Estudiante")].lower() for enc, filas in hojas.values() for f in filas})
 salida = {"iteraciones": ITERACIONES, "estudiantes": {}}
