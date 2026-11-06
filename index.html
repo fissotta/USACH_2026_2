@@ -221,7 +221,7 @@
   }
 
   async function descifrar(id, rut) {
-    const e = datos.estudiantes[id];
+    const e = id === null ? datos.docente : datos.estudiantes[id];
     const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(rut), "PBKDF2", false, ["deriveKey"]);
     const clave = await crypto.subtle.deriveKey(
       { name: "PBKDF2", hash: "SHA-256", salt: b64(e.sal), iterations: datos.iteraciones },
@@ -230,8 +230,7 @@
     return JSON.parse(new TextDecoder().decode(texto));
   }
 
-  function mostrar(id, privado) {
-    ocultar();
+  function rellenar(id, privado) {
     for (const tipo of ["notas", "asistencia"]) {
       const filas = document.querySelectorAll(`#${tipo} tbody tr[data-id="${id}"]`);
       filas.forEach((tr, n) => {
@@ -245,11 +244,28 @@
         });
       });
     }
-    ayuda.textContent = `Mostrando los resultados de ${id}.`;
+  }
+
+  function botonOcultar() {
     const b = document.createElement("button");
     b.textContent = "Ocultar";
     b.onclick = ocultar;
     ayuda.appendChild(b);
+  }
+
+  // Vista docente: muestra las notas y la asistencia de todo el curso
+  function mostrarTodo(todo) {
+    ocultar();
+    Object.entries(todo).forEach(([id, privado]) => rellenar(id, privado));
+    ayuda.textContent = "Vista docente: mostrando las notas y la asistencia de todo el curso.";
+    botonOcultar();
+  }
+
+  function mostrar(id, privado) {
+    ocultar();
+    rellenar(id, privado);
+    ayuda.textContent = `Mostrando los resultados de ${id}.`;
+    botonOcultar();
     document.querySelector(`#notas tr[data-id="${id}"]`)?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
@@ -288,6 +304,13 @@
       dialogo.close();
       mostrar(pedido, privado);
     } catch {
+      try {
+        if (!datos.docente) throw new Error();
+        const todo = await descifrar(null, rut);
+        dialogo.close();
+        mostrarTodo(todo);
+        return;
+      } catch {}
       error.textContent = "La clave no es correcta.";
       input.select();
     } finally {

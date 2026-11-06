@@ -2,7 +2,8 @@
 
 La parte pública solo trae el ramo y las iniciales del estudiante. Las notas y la
 asistencia de cada estudiante van cifradas (AES-GCM) con una clave derivada de su
-RUT sin puntos ni dígito verificador (PBKDF2-SHA256).
+RUT sin puntos ni dígito verificador (PBKDF2-SHA256). Si existe RUTS/docente.txt, se agrega
+además un bloque con todo el curso cifrado con el RUT del docente.
 """
 import base64
 import glob
@@ -102,6 +103,12 @@ for clave, (encabezado, filas) in hojas.items():
 
 for ident, p in privado.items():
     salida["estudiantes"][ident] = cifrar({"notas": p["notas"], "asistencia": p["asistencia"]}, p["rut"])
+
+# Vista docente: todo el curso cifrado con el RUT del docente (RUTS/docente.txt, fuera de git)
+if os.path.exists("RUTS/docente.txt"):
+    rut_docente = open("RUTS/docente.txt").read().strip().replace(".", "").split("-")[0]
+    todo = {ident: {"notas": p["notas"], "asistencia": p["asistencia"]} for ident, p in privado.items()}
+    salida["docente"] = cifrar(todo, rut_docente)
 
 with open("datos.json", "w", encoding="utf-8") as f:
     json.dump(salida, f, ensure_ascii=False, indent=1)
