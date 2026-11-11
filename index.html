@@ -66,6 +66,7 @@
   table { width: 100%; border-collapse: collapse; font-size: .92rem; }
   th, td { padding: 8px 14px; text-align: left; white-space: nowrap; }
   th { background: var(--turquesa); color: var(--blanco); font-weight: 500; }
+  tbody tr:nth-child(odd) { background: var(--blanco); }
   tbody tr:nth-child(even) { background: var(--turquesa-claro); }
   td.num { text-align: center; font-variant-numeric: tabular-nums; }
   td.bajo { font-weight: 700; color: var(--rojo); }
@@ -76,7 +77,11 @@
     opacity: .85;
     user-select: none;
   }
-  tr.abierto { background: #D5EBE8 !important; box-shadow: inset 4px 0 0 var(--turquesa); }
+  tr.abierto { box-shadow: inset 4px 0 0 var(--turquesa); }
+  /* Con un solo estudiante abierto se resaltan sus filas; en la vista docente se mantienen las franjas */
+  body:not(.docente) tr.abierto { background: #D5EBE8; }
+  h3 { font-size: .98rem; font-weight: 500; color: var(--turquesa-oscuro); margin: 18px 0 8px; }
+  h3:first-child { margin-top: 0; }
 
   .id {
     font: inherit; font-weight: 700; letter-spacing: .04em;
@@ -139,11 +144,11 @@
     <p class="ayuda" id="ayuda"></p>
     <section>
       <h2>Notas</h2>
-      <div class="tabla-wrap" id="notas"><p class="estado">Cargando…</p></div>
+      <div id="notas"><p class="estado">Cargando…</p></div>
     </section>
     <section>
       <h2>Asistencia</h2>
-      <div class="tabla-wrap" id="asistencia"><p class="estado">Cargando…</p></div>
+      <div id="asistencia"><p class="estado">Cargando…</p></div>
     </section>
     <section>
       <h2>Recursos</h2>
@@ -193,16 +198,31 @@
   ayuda.textContent = AYUDA;
   let datos;
 
+  // Una tabla por ramo; la columna Ramo pasa a ser el título de cada tabla
   function dibujar(tipo) {
     const { encabezado, filas } = datos[tipo];
+    // Mismo orden de ramos en notas y asistencia
+    const ramos = [...new Set([...datos.notas.filas, ...filas].map(f => f[0]))].filter(r => filas.some(f => f[0] === r));
+    const bloques = ramos.flatMap(ramo => {
+      const h3 = document.createElement("h3");
+      h3.textContent = ramo;
+      const wrap = document.createElement("div");
+      wrap.className = "tabla-wrap";
+      wrap.appendChild(tablaRamo(tipo, encabezado, filas.filter(f => f[0] === ramo)));
+      return [h3, wrap];
+    });
+    document.getElementById(tipo).replaceChildren(...bloques);
+  }
+
+  function tablaRamo(tipo, encabezado, filas) {
     const table = document.createElement("table");
     const thead = table.createTHead().insertRow();
-    encabezado.forEach(h => { const th = document.createElement("th"); th.textContent = celda(h); thead.appendChild(th); });
+    encabezado.slice(1).forEach(h => { const th = document.createElement("th"); th.textContent = celda(h); thead.appendChild(th); });
     const tbody = table.createTBody();
     filas.forEach(([ramo, id]) => {
       const tr = tbody.insertRow();
       tr.dataset.id = id;
-      tr.insertCell().textContent = ramo;
+      tr.dataset.ramo = ramo;
       const btn = document.createElement("button");
       btn.className = "id";
       btn.textContent = id;
@@ -217,7 +237,7 @@
         td.textContent = rellenoCol(tipo, i);
       }
     });
-    document.getElementById(tipo).replaceChildren(table);
+    return table;
   }
 
   async function descifrar(id, rut) {
@@ -233,10 +253,11 @@
   function rellenar(id, privado) {
     for (const tipo of ["notas", "asistencia"]) {
       const filas = document.querySelectorAll(`#${tipo} tbody tr[data-id="${id}"]`);
-      filas.forEach((tr, n) => {
+      filas.forEach(tr => {
         tr.classList.add("abierto");
-        const real = privado[tipo][n] || [];
-        [...tr.cells].slice(2).forEach((td, j) => {
+        // Un estudiante inscrito en dos ramos tiene una fila en cada tabla
+        const real = privado[tipo].find(f => f[0] === tr.dataset.ramo) || [];
+        [...tr.cells].slice(1).forEach((td, j) => {
           const v = real[j + 2], col = datos[tipo].encabezado[j + 2];
           td.textContent = celda(v, col);
           td.classList.remove("oculto");
@@ -256,6 +277,7 @@
   // Vista docente: muestra las notas y la asistencia de todo el curso
   function mostrarTodo(todo) {
     ocultar();
+    document.body.classList.add("docente");
     Object.entries(todo).forEach(([id, privado]) => rellenar(id, privado));
     ayuda.textContent = "Vista docente: mostrando las notas y la asistencia de todo el curso.";
     botonOcultar();
@@ -272,9 +294,10 @@
   function ocultar() {
     document.querySelectorAll("tr.abierto").forEach(tr => {
       tr.classList.remove("abierto");
-      const tipo = tr.closest(".tabla-wrap").id;
-      [...tr.cells].slice(2).forEach((td, j) => { td.textContent = rellenoCol(tipo, j + 2); td.className = "num oculto"; });
+      const tipo = tr.closest("#notas, #asistencia").id;
+      [...tr.cells].slice(1).forEach((td, j) => { td.textContent = rellenoCol(tipo, j + 2); td.className = "num oculto"; });
     });
+    document.body.classList.remove("docente");
     ayuda.textContent = AYUDA;
   }
 
