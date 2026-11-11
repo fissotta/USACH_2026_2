@@ -69,7 +69,12 @@ def leer_hoja(ws):
     cols = [i for i, h in enumerate(filas[0])
             if h != "#" and any(f[i] not in ("", "-") for f in filas[1:])]
     filas = [[f[i] for i in cols] for f in filas]
-    return filas[0], filas[1:]
+    encabezado, filas = filas[0], filas[1:]
+    # Dentro de cada ramo, ordenadas por grupo (los sin grupo, "-", quedan como están)
+    if "Grupo" in encabezado:
+        g, ramos = encabezado.index("Grupo"), [f[0] for f in filas]
+        filas.sort(key=lambda f: (ramos.index(f[0]), f[g] if isinstance(f[g], (int, float)) else 0))
+    return encabezado, filas
 
 
 def b64(b):
