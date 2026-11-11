@@ -63,8 +63,11 @@ def leer_hoja(ws):
     filas = [r for r in ws.iter_rows(values_only=True) if any(c is not None for c in r)]
     inicio = min(next(i for i, c in enumerate(r) if c is not None) for r in filas)
     filas = [[valor(c) for c in r[inicio:]] for r in filas]
-    # La columna "#" (numeración de la planilla) no se publica
-    cols = [i for i, h in enumerate(filas[0]) if h != "#"]
+    # Lo que esté sobre el encabezado (p. ej. las ponderaciones) no se publica
+    filas = filas[next(i for i, f in enumerate(filas) if "Estudiante" in f):]
+    # Tampoco la columna "#" (numeración de la planilla) ni las evaluaciones aún sin notas
+    cols = [i for i, h in enumerate(filas[0])
+            if h != "#" and any(f[i] not in ("", "-") for f in filas[1:])]
     filas = [[f[i] for i in cols] for f in filas]
     return filas[0], filas[1:]
 
